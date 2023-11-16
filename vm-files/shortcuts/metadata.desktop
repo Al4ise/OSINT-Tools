@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Metadata Tool     
+Categories=Application;OSINT
+Exec=/home/osint/Documents/scripts/metadata.sh
+Icon=/home/osint/Documents/icons/metadata.png
+Terminal=true

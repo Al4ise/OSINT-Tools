@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Reddit Tool
+Categories=Application;OSINT
+Exec=/home/osint/Documents/scripts/reddit.sh
+Icon=/home/osint/Documents/icons/reddit.png
+Terminal=true

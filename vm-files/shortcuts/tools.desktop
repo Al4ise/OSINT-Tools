@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=OSINT Tools
+Categories=Network;OSINT
+Exec=firefox '/home/osint/Desktop/tools/index.html'
+Icon=/home/osint/Documents/icons/tools.png
+Terminal=true

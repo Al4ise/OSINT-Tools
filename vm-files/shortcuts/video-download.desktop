@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Video Download Tool       
+Categories=Application;OSINT
+Exec=/home/osint/Documents/scripts/video-download.sh
+Icon=/home/osint/Documents/icons/video-download.png
+Terminal=true

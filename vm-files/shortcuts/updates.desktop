@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Update Scripts        
+Categories=Application;OSINT
+Exec=/home/osint/Documents/scripts/updates.sh
+Icon=/home/osint/Documents/icons/updates.png
+Terminal=true

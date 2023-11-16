@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Captures Tool
+Categories=Network;OSINT
+Exec=/home/osint/Documents/scripts/captures.sh
+Icon=/home/osint/Documents/icons/captures.png
+Terminal=true

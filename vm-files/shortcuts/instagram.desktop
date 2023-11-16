@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Instagram Tool 
+Categories=Application;OSINT
+Exec=/home/osint/Documents/scripts/instagram.sh
+Icon=/home/osint/Documents/icons/instagram.png
+Terminal=true

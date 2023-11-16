@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Video Utilities Tool     
+Categories=Application;OSINT
+Exec=/home/osint/Documents/scripts/video-utilities.sh
+Icon=/home/osint/Documents/icons/video-utilities.png
+Terminal=true

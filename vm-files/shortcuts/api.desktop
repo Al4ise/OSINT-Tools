@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=API Tool  
+Categories=Application;OSINT
+Exec=/home/osint/Documents/scripts/api.sh
+Icon=/home/osint/Documents/icons/api.png
+Terminal=true

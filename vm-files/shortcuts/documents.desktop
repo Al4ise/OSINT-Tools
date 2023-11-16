@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Documents Tool
+Categories=Network;OSINT
+Exec=/home/osint/Documents/scripts/documents.sh
+Icon=/home/osint/Documents/icons/documents.png
+Terminal=true

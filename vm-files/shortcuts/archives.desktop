@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Archives Tool
+Categories=Network;OSINT
+Exec=/home/osint/Documents/scripts/archives.sh
+Icon=/home/osint/Documents/icons/archives.png
+Terminal=true

@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Galleries Tool  
+Categories=Application;OSINT
+Exec=/home/osint/Documents/scripts/galleries.sh
+Icon=/home/osint/Documents/icons/galleries.png
+Terminal=true

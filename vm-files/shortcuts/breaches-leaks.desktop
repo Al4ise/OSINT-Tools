@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Breaches-Leaks Tool
+Categories=Network;OSINT
+Exec=/home/osint/Documents/scripts/breaches-leaks.sh
+Icon=/home/osint/Documents/icons/breaches-leaks.png
+Terminal=true

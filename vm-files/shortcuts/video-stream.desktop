@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Video Stream Tool
+Categories=Network;OSINT
+Exec=/home/osint/Documents/scripts/video-stream.sh
+Icon=/home/osint/Documents/icons/video-stream.png
+Terminal=true
