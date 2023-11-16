@@ -23,7 +23,7 @@ echo 'Unattended-Upgrade::Allowed-Origins:: "LP-PPA-mozillateam:${distro_codenam
 
 sudo apt purge -y apport apport-symptoms popularity-contest ubuntu-report whoopsie
 sudo apt update
-sudo apt install -y chromium build-essential brave-browser dkms gcc make perl libncurses5-dev curl gnupg2 tor python3-pip dh-python python3-all python3-stdeb python3-pyqt5 python3-gpg python3-requests python3-socks python3-packaging ffmpeg vlc libffi-dev jq ripgrep bleachbit kazam libcanberra-gtk-module httrack webhttrack subversion mat2 libimage-exiftool-perl mediainfo-gui default-jre git python3-venv
+sudo apt install -y build-essential brave-browser dkms gcc make perl libncurses5-dev curl gnupg2 tor python3-pip dh-python python3-all python3-stdeb python3-pyqt5 python3-gpg python3-requests python3-socks python3-packaging ffmpeg vlc libffi-dev jq ripgrep bleachbit kazam libcanberra-gtk-module httrack webhttrack subversion mat2 libimage-exiftool-perl mediainfo-gui default-jre git python3-venv
 sudo apt install -y firefox --allow-downgrades
 
 # edits
@@ -40,7 +40,7 @@ sudo apt -y upgrade
 sudo apt --fix-broken install -y
 
 sudo snap remove --purge firefox
-
+sudo snap install chromium
 firefox &
 sleep 30
 pkill -f firefox
@@ -49,7 +49,6 @@ curl -O https://inteltechniques.com/data/osintbook10/ff-template.zip
 unzip ff-template.zip -d ~/.mozilla/firefox/
 cd ~/.mozilla/firefox/ff-template/
 cp -R * ~/.mozilla/firefox/*.default-release
-cd ~/Desktop
 rm ff-template.zip
 
 sudo pip install -U youtube-dl
@@ -57,9 +56,9 @@ sudo pip install -U yt-dlp
 
 mkdir -p ~/Documents/scripts
 mkdir -p ~/Documents/icons
-cp -r $SOURCE/vm-files/scripts ~/Documents/scripts
-cp -r $SOURCE/vm-files/icons ~/Documents/icons
-sudo cp -r $SOURCE/vm-files/shortcuts /usr/share/applications/
+cp $SOURCE/vm-files/scripts/* ~/Documents/scripts
+cp $SOURCE/vm-files/icons/* ~/Documents/icons
+sudo cp $SOURCE/vm-files/shortcuts/* /usr/share/applications/
 cd ~/Desktop
 
 mkdir -p ~/Downloads/Programs
