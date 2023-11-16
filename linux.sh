@@ -11,9 +11,15 @@
 ## Full license information and restrictions at https://inteltechniques.com/osintbook10/license.txt
 SOURCE="$(dirname "$(realpath "$0")")"
 
+sudo apt update
+sudo apt install curl
+sudo apt purge -y apport apport-symptoms popularity-contest ubuntu-report whoopsie
 sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
 echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
 sudo add-apt-repository -y ppa:mozillateam/ppa
+sudo apt update
+sudo apt install -y build-essential brave-browser dkms gcc make perl libncurses5-dev gnupg2 tor python3-pip dh-python python3-all python3-stdeb python3-pyqt5 python3-gpg python3-requests python3-socks python3-packaging ffmpeg vlc libffi-dev jq ripgrep bleachbit kazam libcanberra-gtk-module httrack webhttrack subversion mat2 libimage-exiftool-perl mediainfo-gui default-jre git python3-venv
+
 echo '
 Package: *
 Pin: release o=LP-PPA-mozillateam
@@ -21,9 +27,6 @@ Pin-Priority: 1001
 ' | sudo tee /etc/apt/preferences.d/mozilla-firefox
 echo 'Unattended-Upgrade::Allowed-Origins:: "LP-PPA-mozillateam:${distro_codename}";' | sudo tee /etc/apt/apt.conf.d/51unattended-upgrades-firefox
 
-sudo apt purge -y apport apport-symptoms popularity-contest ubuntu-report whoopsie
-sudo apt update
-sudo apt install -y build-essential brave-browser dkms gcc make perl libncurses5-dev curl gnupg2 tor python3-pip dh-python python3-all python3-stdeb python3-pyqt5 python3-gpg python3-requests python3-socks python3-packaging ffmpeg vlc libffi-dev jq ripgrep bleachbit kazam libcanberra-gtk-module httrack webhttrack subversion mat2 libimage-exiftool-perl mediainfo-gui default-jre git python3-venv
 sudo apt install -y firefox --allow-downgrades
 
 # edits
