@@ -9,8 +9,10 @@
 ## These instructions are provided 'as is' without warranty of any kind
 ## In no event shall the copyright holder be liable for any claim, damages or other liability
 ## Full license information and restrictions at https://inteltechniques.com/osintbook10/license.txt
-SOURCE="$(dirname ${BASH_SOURCE[0]})"
+SOURCE="$(dirname "$(realpath "$0")")"
 
+sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
+echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
 sudo add-apt-repository -y ppa:mozillateam/ppa
 echo '
 Package: *
@@ -20,16 +22,14 @@ Pin-Priority: 1001
 echo 'Unattended-Upgrade::Allowed-Origins:: "LP-PPA-mozillateam:${distro_codename}";' | sudo tee /etc/apt/apt.conf.d/51unattended-upgrades-firefox
 
 sudo apt purge -y apport apport-symptoms popularity-contest ubuntu-report whoopsie
-
 sudo apt update
-sudo apt install -y build-essential dkms gcc make perl libncurses5-dev curl gnupg2 tor python3-pip dh-python python3-all python3-stdeb python3-pyqt5 python3-gpg python3-requests python3-socks python3-packaging ffmpeg vlc libffi-dev jq ripgrep bleachbit kazam libcanberra-gtk-module httrack webhttrack subversion mat2 libimage-exiftool-perl mediainfo-gui default-jre git python3-venv
+sudo apt install -y chromium build-essential brave-browser dkms gcc make perl libncurses5-dev curl gnupg2 tor python3-pip dh-python python3-all python3-stdeb python3-pyqt5 python3-gpg python3-requests python3-socks python3-packaging ffmpeg vlc libffi-dev jq ripgrep bleachbit kazam libcanberra-gtk-module httrack webhttrack subversion mat2 libimage-exiftool-perl mediainfo-gui default-jre git python3-venv
 sudo apt install -y firefox --allow-downgrades
 
 # edits
 sudo apt install -y qemu-guest-agent
 systemctl enable qemu-guest-agent
 systemctl start qemu-guest-agent
-
 
 wget http://dl.google.com/dl/earth/client/current/google-earth-stable_current_amd64.deb
 sudo rm google-earth-stable_current_amd64.deb
@@ -41,7 +41,6 @@ sudo apt --fix-broken install -y
 
 sudo snap remove --purge firefox
 
-cd ~/Desktop
 firefox &
 sleep 30
 pkill -f firefox
@@ -52,14 +51,6 @@ cd ~/.mozilla/firefox/ff-template/
 cp -R * ~/.mozilla/firefox/*.default-release
 cd ~/Desktop
 rm ff-template.zip
-sudo snap install chromium
-git clone https://github.com/micahflee/torbrowser-launcher.git
-cd torbrowser-launcher
-./build_deb.sh
-sudo dpkg -i deb_dist/torbrowser-launcher_*.deb
-./torbrowser-launcher 
-cd ..
-rm -rf torbrowser-launcher/
 
 sudo pip install -U youtube-dl
 sudo pip install -U yt-dlp
@@ -103,7 +94,6 @@ python3 -m venv OsintgramEnvironment
 source OsintgramEnvironment/bin/activate
 sudo pip install -r requirements.txt 2>/dev/null
 deactivate
-sed -i 's/followinfnumbers/followingnumbers/g' ~/Documents/scripts/instagram.sh
 mkdir -p ~/Downloads/Programs/Gallery-DL
 cd ~/Downloads/Programs/Gallery-DL
 python3 -m venv gallerydlEnvironment
@@ -132,9 +122,6 @@ python3 -m venv holeheEnvironment
 source holeheEnvironment/bin/activate
 sudo pip install -U holehe 2>/dev/null
 deactivate
-cd ~/Documents/scripts/
-sed -i 's/FALSE \"\$opt4\" //g' users-emails.sh
-sed -i '50,55d' updates.sh
 cd ~/Downloads/Programs
 git clone https://github.com/p1ngul1n0/blackbird
 cd blackbird
@@ -163,8 +150,6 @@ cd ~/Downloads/Programs
 git clone https://github.com/FortyNorthSecurity/EyeWitness.git
 cd EyeWitness/Python/setup
 sudo ./setup.sh
-cd ~/Documents/scripts
-sed -i 's/ChrisTruncer/FortyNorthSecurity/g' updates.sh
 cd ~/Downloads/Programs
 wget https://github.com/mozilla/geckodriver/releases/download/v0.32.0/geckodriver-v0.32.0-linux-aarch64.tar.gz
 tar -xvzf geckodriver*
