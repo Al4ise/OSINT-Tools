@@ -9,7 +9,7 @@
 ## These instructions are provided 'as is' without warranty of any kind
 ## In no event shall the copyright holder be liable for any claim, damages or other liability
 ## Full license information and restrictions at https://inteltechniques.com/osintbook10/license.txt
-SOURCE=${BASH_SOURCE[0]}
+SOURCE="$(basename ${BASH_SOURCE[0]})"
 
 sudo adduser osint vboxsf
 sudo add-apt-repository -y ppa:mozillateam/ppa
