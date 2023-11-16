@@ -31,8 +31,8 @@ sudo apt install -y firefox --allow-downgrades
 
 # edits
 sudo apt install -y qemu-guest-agent
-systemctl enable qemu-guest-agent
-systemctl start qemu-guest-agent
+sudo systemctl enable qemu-guest-agent
+sudo systemctl start qemu-guest-agent
 
 wget http://dl.google.com/dl/earth/client/current/google-earth-stable_current_amd64.deb
 sudo rm google-earth-stable_current_amd64.deb
