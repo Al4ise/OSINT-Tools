@@ -301,7 +301,7 @@ deactivate
 cd ~/Downloads
 h8mail -g
 sed -i 's/\;leak\-lookup\_pub/leak\-lookup\_pub/g' h8mail_config.ini
-gsettings set org.gnome.desktop.background picture-uri ''
+#gsettings set org.gnome.desktop.background picture-uri ''
 gsettings set org.gnome.desktop.background primary-color 'rgb(66, 81, 100)'
 gsettings set org.gnome.shell favorite-apps []
 gsettings set org.gnome.shell.extensions.dash-to-dock dock-position BOTTOM
