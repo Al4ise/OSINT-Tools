@@ -9,9 +9,8 @@
 ## These instructions are provided 'as is' without warranty of any kind
 ## In no event shall the copyright holder be liable for any claim, damages or other liability
 ## Full license information and restrictions at https://inteltechniques.com/osintbook10/license.txt
-SOURCE="$(basename ${BASH_SOURCE[0]})"
+SOURCE="$(dirname ${BASH_SOURCE[0]})"
 
-sudo adduser osint vboxsf
 sudo add-apt-repository -y ppa:mozillateam/ppa
 echo '
 Package: *
@@ -40,7 +39,6 @@ sudo apt update --fix-missing
 sudo apt -y upgrade
 sudo apt --fix-broken install -y
 
-sudo rcvboxadd setup
 sudo snap remove --purge firefox
 
 cd ~/Desktop
@@ -72,8 +70,6 @@ cp -r $SOURCE/vm-files/scripts ~/Documents/scripts
 cp -r $SOURCE/vm-files/icons ~/Documents/icons
 sudo cp -r $SOURCE/vm-files/shortcuts /usr/share/applications/
 cd ~/Desktop
-rm vm-files.zip
-rm -rf vm-files
 
 mkdir -p ~/Downloads/Programs
 mkdir -p ~/Downloads/Programs/Streamlink
