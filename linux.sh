@@ -59,10 +59,9 @@ sudo pip install -U yt-dlp
 
 ln -sf $SOURCE/vm-files/scripts ~/Documents/scripts
 ln -sf $SOURCE/vm-files/icons ~/Documents/icons
-sudo cp $SOURCE/vm-files/shortcuts/* /usr/share/applications/ ###
-ln -sf $SOURCE/tools ~/Desktop/tools
+sudo cp $SOURCE/vm-files/shortcuts/* /usr/share/applications/
+ln -sf $SOURCE/tools ~/Desktop/Tools
 
-mkdir -p ~/Downloads/Programs
 mkdir -p ~/Downloads/Programs/Streamlink
 cd ~/Downloads/Programs/Streamlink
 python3 -m venv streamlinkEnvironment
