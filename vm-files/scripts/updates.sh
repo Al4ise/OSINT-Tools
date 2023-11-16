@@ -135,7 +135,6 @@ source recon-ngEnvironment/bin/activate
 sudo pip install -r REQUIREMENTS 2>/dev/null
 deactivate
 sudo pip install -U openai-whisper
-cd ~/Downloads/Programs/internetarchive
 source internetarchiveEnvironment/bin/activate
 sudo pip install -U internetarchive 2>/dev/null
 deactivate

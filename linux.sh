@@ -248,11 +248,6 @@ source DownloaderForRedditEnvironment/bin/activate
 sudo pip install -r requirements.txt 2>/dev/null
 deactivate
 
-cd ~/Desktop
-curl -O https://inteltechniques.com/data/osintbook10/tools.zip
-unzip tools.zip -d ~/Desktop/
-rm tools.zip
-rm -rf __MACOSX
 mkdir -p ~/Downloads/Programs/waybackpy
 cd ~/Downloads/Programs/waybackpy
 python3 -m venv waybackpyEnvironment
@@ -293,11 +288,6 @@ mkdir -p ~/.cache/whisper
 cd ~/.cache/whisper
 wget https://openaipublic.azureedge.net/main/whisper/models/9ecf779972d90ba49c06d968637d720dd632c55bbf19d441fb42bf17a411e794/small.pt
 cd ~/Documents/scripts
-rm video-utilities.sh
-wget https://inteltechniques.com/data/osintbook10/video-utilities.sh
-chmod +x video-utilities.sh
-sed -i 's/cd \~\/Downloads\/Programs\/internetarchive/sudo pip install \-U openai\-whisper\ncd \~\/Downloads\/Programs\/internetarchive/g' updates.sh 
-sed -i 's/\-info \-\-write\-comments/\-info \-\-write\-info\-json/g' video-download.sh 
 mkdir -p ~/Downloads/Programs/internetarchive
 cd ~/Downloads/Programs/internetarchive
 python3 -m venv internetarchiveEnvironment
