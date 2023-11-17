@@ -11,6 +11,29 @@
 ## Full license information and restrictions at https://inteltechniques.com/osintbook10/license.txt
 SOURCE="$(dirname "$(realpath "$0")")"
 
+# edits
+echo "What Virtualization Software are you on?:"
+echo "[1] Virtualbox"
+echo "[2] UTM/QEMU"
+echo "[3] None/Other"
+read -rp "Choose an option: " option
+case $option in
+    1) echo "Installing Virtualbox-specific software..."
+        sudo adduser osint vboxsf
+        sudo rcvboxadd setup
+        sudo apt install -y virtualbox-guest-utils
+    ;;
+    2) echo "Installing UTM/QEMU-specific software..." 
+        sudo apt install -y qemu-guest-agent
+        sudo systemctl enable qemu-guest-agent
+        sudo systemctl start qemu-guest-agent
+    ;;
+    3) echo "No virtualization-specific software will be installed."
+    ;;
+    *) echo "Invalid option. Try another one." && exit
+    ;;
+esac
+
 sudo apt update
 sudo apt install curl
 sudo apt purge -y apport apport-symptoms popularity-contest ubuntu-report whoopsie
@@ -28,11 +51,6 @@ Pin-Priority: 1001
 echo 'Unattended-Upgrade::Allowed-Origins:: "LP-PPA-mozillateam:${distro_codename}";' | sudo tee /etc/apt/apt.conf.d/51unattended-upgrades-firefox
 
 sudo apt install -y firefox --allow-downgrades
-
-# edits
-sudo apt install -y qemu-guest-agent
-sudo systemctl enable qemu-guest-agent
-sudo systemctl start qemu-guest-agent
 
 wget http://dl.google.com/dl/earth/client/current/google-earth-stable_current_amd64.deb
 sudo rm google-earth-stable_current_amd64.deb
@@ -57,10 +75,15 @@ rm ff-template.zip
 sudo pip install -U youtube-dl
 sudo pip install -U yt-dlp
 
-ln -sf $SOURCE/vm-files/scripts ~/Documents/scripts
-ln -sf $SOURCE/vm-files/icons ~/Documents/icons
-sudo cp $SOURCE/vm-files/shortcuts/* /usr/share/applications/
-ln -sf $SOURCE/tools ~/Desktop/Tools
+ln -sf "$SOURCE"/vm-files/scripts ~/Documents/scripts
+ln -sf "$SOURCE"/vm-files/icons ~/Documents/icons
+ln -sf "$SOURCE"/tools ~/Desktop/Tools
+
+for i in $(ls -A "$SOURCE"/vm-files/shortcuts/ ); do
+    if [ ! -e "$SOURCE"/vm-files/shortcuts/"$i" ]; then
+        sudo ln -sf "$SOURCE"/vm-files/shortcuts/"$i" /usr/share/applications/"$i"
+    fi
+done
 
 mkdir -p ~/Downloads/Programs/Streamlink
 cd ~/Downloads/Programs/Streamlink
@@ -185,7 +208,6 @@ python3 -m venv Carbon14Environment
 source Carbon14Environment/bin/activate
 sudo pip install -r requirements.txt 2>/dev/null
 deactivate
-
 mkdir -p ~/Downloads/Programs/xeuledoc
 cd ~/Downloads/Programs/xeuledoc
 python3 -m venv xeuledocEnvironment
@@ -193,14 +215,12 @@ source xeuledocEnvironment/bin/activate
 sudo pip install -U xeuledoc 2>/dev/null
 deactivate
 cd ~/Downloads/Programs
-
 git clone https://github.com/GuidoBartoli/sherloq.git
 cd sherloq/gui
 python3 -m venv sherloqEnvironment
 source sherloqEnvironment/bin/activate
 sudo pip install -r requirements.txt 2>/dev/null
 deactivate
-
 cd ~/Downloads/Programs
 git clone https://github.com/opsdisk/metagoofil.git
 cd metagoofil
@@ -227,7 +247,6 @@ python3 -m venv DownloaderForRedditEnvironment
 source DownloaderForRedditEnvironment/bin/activate
 sudo pip install -r requirements.txt 2>/dev/null
 deactivate
-
 mkdir -p ~/Downloads/Programs/waybackpy
 cd ~/Downloads/Programs/waybackpy
 python3 -m venv waybackpyEnvironment
@@ -302,6 +321,7 @@ sed -i 's/\;leak\-lookup\_pub/leak\-lookup\_pub/g' h8mail_config.ini
 gsettings set org.gnome.desktop.background primary-color 'rgb(66, 81, 100)'
 gsettings set org.gnome.shell favorite-apps []
 gsettings set org.gnome.shell.extensions.dash-to-dock dock-position BOTTOM
+### ls -A /usr/share/applications, brave.desktop
 gsettings set org.gnome.shell favorite-apps "['firefox.desktop', 'chromium_chromium.desktop', 'torbrowser.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.Terminal.desktop', 'updates.desktop', 'tools.desktop', 'video-download.desktop', 'video-utilities.desktop', 'video-stream.desktop', 'instagram.desktop', 'galleries.desktop', 'users-emails.desktop', 'captures.desktop', 'domains.desktop', 'metadata.desktop', 'archives.desktop', 'documents.desktop', 'breaches-leaks.desktop', 'reddit.desktop', 'spiderfoot.desktop', 'recon-ng.desktop', 'api.desktop', 'google-earth-pro.desktop', 'kazam.desktop', 'gnome-control-center.desktop']"
 gsettings set org.gnome.shell.extensions.dash-to-dock dash-max-icon-size 32
 echo
