@@ -79,7 +79,7 @@ ln -sf "$SOURCE"/vm-files/scripts ~/Documents/scripts
 ln -sf "$SOURCE"/vm-files/icons ~/Documents/icons
 ln -sf "$SOURCE"/tools ~/Desktop/Tools
 
-for i in $(ls -A "$SOURCE"/vm-files/shortcuts/ ); do
+for i in "$SOURCE"/vm-files/shortcuts/*; do
     if [ ! -e "$SOURCE"/vm-files/shortcuts/"$i" ]; then
         sudo ln -sf "$SOURCE"/vm-files/shortcuts/"$i" /usr/share/applications/"$i"
     fi
