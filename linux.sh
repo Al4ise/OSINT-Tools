@@ -14,8 +14,8 @@ pythonInstall() {
 
 pyGitInstall() {
     local url="$2"
-    local name="$(basename "$1")"
-
+    local name="$(basename "$1" .git)"
+    
     cd ~/Downloads/Programs
     git clone "$url"
     cd "$name"
