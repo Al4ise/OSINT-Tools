@@ -1,12 +1,5 @@
 #!/usr/bin/bash
-
 SOURCE="$(dirname "$(realpath "$0")")"
-
-# logging pt. 1
-LOGFILE=~/Documents/update.log
-(
-echo "$(date "+%m%d%Y %T") : Starting work"
-# ---
 
 pythonInstall() {
     local name="$1"
@@ -251,9 +244,3 @@ gsettings set org.gnome.shell.extensions.dash-to-dock dash-max-icon-size 32
 echo
 read -rsp $'Press enter to continue, reboot, then launch the Updates script.\n'
 echo
-
-# logging pt 2
-echo error 1>&2 # test stderr
-echo "$(date "+%m%d%Y %T") : Done"
-) >& $LOGFILE
-# ---
