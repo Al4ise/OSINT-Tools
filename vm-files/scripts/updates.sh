@@ -1,18 +1,14 @@
 #!/usr/bin/bash
 SOURCE="$(dirname "$(realpath "$0")")"
 
+# Go two directories behind from the source directory
+cd "$SOURCE/../.." || exit
+
 # update
 cd "$SOURCE" || exit
 git reset --hard HEAD >> /dev/null
-
-git fetch -q
-if [ "$(git rev-list HEAD...origin/main --count)" != "0" ]; then
-    echo "Updating Scripts..."
-    git pull -q
-    exec "$(realpath "$0")"
-else
-    echo "Scripts are up to date"
-fi
+git pull
+exec "$(realpath "$0")"
 
 pythonInstall() {
     local name="$1"
@@ -48,6 +44,8 @@ pyGitInstall() {
     sudo pip install -r "$(basename "$req_path")" 2>/dev/null
     deactivate
 }
+
+cd
 
 # keyrings/repos
 sudo wget -q -N -O /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
