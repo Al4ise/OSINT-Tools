@@ -252,6 +252,13 @@ else
     git clone --recursive https://github.com/AmIJesse/Elasticsearch-Crawler.git
 fi
 
+# SocialPwned
+$ git clone https://github.com/MrTuxx/SocialPwned.git
+$ cd SocialPwned
+$ sudo pip3 install --user --upgrade git+https://github.com/twintproject/twint.git@origin/master#egg=twint
+$ sudo pip3 install -r requirements.txt
+$ sudo python3 socialpwned.py --credentials credentials.json --help
+
 #gsettings set org.gnome.desktop.background picture-uri ''
 gsettings set org.gnome.desktop.background primary-color 'rgb(66, 81, 100)'
 gsettings set org.gnome.shell favorite-apps []
