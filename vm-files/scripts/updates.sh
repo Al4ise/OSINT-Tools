@@ -8,7 +8,9 @@ cd "$SOURCE/../.." || exit
 cd "$SOURCE" || exit
 git reset --hard HEAD >> /dev/null
 git pull
-exec "$(realpath "$0")"
+if [ "$1" != "-U" ]; then
+    exec "$(realpath "$0")" -U
+fi
 
 pythonInstall() {
     local name="$1"
