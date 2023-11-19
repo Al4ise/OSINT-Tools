@@ -97,10 +97,7 @@ if ! [[ "$(dpkg -l qemu-guest-agent)" || "$(dpkg -l virtualbox-guest-utils)" ]];
         *) echo "Invalid option. Try another one." && exit
             ;;
     esac
-
-    # purges
-    sudo apt purge -y apport apport-symptoms popularity-contest ubuntu-report whoopsie
-    sudo snap remove --purge firefox
+    firstrun=1
 fi
 
 sudo apt install -y curl build-essential unrar brave-browser dkms gcc make perl libncurses5-dev gnupg2 tor python3-pip dh-python python3-all python3-stdeb python3-pyqt5 python3-gpg python3-requests python3-socks python3-packaging ffmpeg vlc libffi-dev jq ripgrep bleachbit kazam libcanberra-gtk-module httrack webhttrack subversion mat2 libimage-exiftool-perl mediainfo-gui default-jre git python3-venv
@@ -109,19 +106,25 @@ sudo apt update --fix-missing
 sudo apt -y upgrade
 sudo apt --fix-broken install -y
 
-#firefox
-sudo apt install -y firefox --allow-downgrades
-firefox &
-sleep 30
-pkill -f firefox
+# purges
+sudo apt purge -y apport apport-symptoms popularity-contest ubuntu-report whoopsie
+sudo snap remove --purge firefox
 
-# firefox profile
-wget https://inteltechniques.com/data/osintbook10/ff-template.zip
-unzip -q ff-template.zip -d ~/.mozilla/firefox/
-cp -rf ~/.mozilla/firefox/ff-template/* ~/.mozilla/firefox/*.default-release/
+if [ "$firstrun" = "1" ]; then
+    #firefox
+    sudo apt install -y firefox --allow-downgrades
+    firefox &
+    sleep 30
+    pkill -f firefox
 
-rm -f ff-template.zip
-rm -rf ~/.mozilla/firefox/ff-template
+    # firefox profile
+    wget https://inteltechniques.com/data/osintbook10/ff-template.zip
+    unzip -q ff-template.zip -d ~/.mozilla/firefox/
+    cp -rf ~/.mozilla/firefox/ff-template/* ~/.mozilla/firefox/*.default-release/
+
+    rm -f ff-template.zip
+    rm -rf ~/.mozilla/firefox/ff-template
+fi
 
 # snap
 sudo snap install chromium
