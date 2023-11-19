@@ -1,14 +1,14 @@
 #!/usr/bin/bash
 SOURCE="$(dirname "$(realpath "$0")")"
 
-# Go two directories behind from the source directory
-cd "$SOURCE/../.." || exit
-
-# update
-cd "$SOURCE" || exit
-git reset --hard HEAD >> /dev/null
-git pull
 if [ "$1" != "-U" ]; then
+    # Go two directories behind from the source directory
+    cd "$SOURCE/../.." || exit
+
+    # update
+    cd "$SOURCE" || exit
+    git reset --hard HEAD >> /dev/null
+    git pull
     exec "$(realpath "$0")" -U
 fi
 
