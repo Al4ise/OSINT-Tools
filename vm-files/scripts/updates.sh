@@ -117,8 +117,9 @@ pkill -f firefox
 
 # firefox profile
 wget https://inteltechniques.com/data/osintbook10/ff-template.zip
-unzip ff-template.zip -d ~/.mozilla/firefox/
-mv -f ~/.mozilla/firefox/ff-template/* ~/.mozilla/firefox/*.default-release/
+unzip -q ff-template.zip -d ~/.mozilla/firefox/
+cp -rf ~/.mozilla/firefox/ff-template/* ~/.mozilla/firefox/*.default-release/
+
 rm -f ff-template.zip
 rm -rf ~/.mozilla/firefox/ff-template
 
