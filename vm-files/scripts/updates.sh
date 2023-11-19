@@ -140,9 +140,9 @@ if [ ! -d ~/.cache/whisper ]; then
 fi
 
 # links
-ln -sf "$SOURCE"/vm-files/scripts ~/Documents/scripts
-ln -sf "$SOURCE"/vm-files/icons ~/Documents/icons
-ln -sf "$SOURCE"/tools ~/Desktop/Tools
+if [ ! -d ~/Documents/icons ]; then ln -s "$SOURCE"/vm-files/icons ~/Documents/icons; fi
+if [ ! -d ~/Documents/scripts ]; then ln -s "$SOURCE"/vm-files/scripts ~/Documents/scripts; fi
+if [ ! -d ~/Desktop/Tools ]; then ln -s "$SOURCE"/tools ~/Desktop/Tools; fi
 
 for i in "$SOURCE"/vm-files/shortcuts/*; do
     sudo ln -sf "$SOURCE"/vm-files/shortcuts/"$i" /usr/share/applications/"$i"
