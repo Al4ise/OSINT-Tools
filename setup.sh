@@ -1,29 +1,6 @@
 #!/usr/bin/bash
 SOURCE="$(dirname "$(realpath "$0")")"
 
-# menu
-echo "What Virtualization Software are you on?:"
-echo "[1] Virtualbox"
-echo "[2] UTM/QEMU"
-echo "[3] None/Other"
-read -rp "Choose an option: " option
-case $option in
-   1) echo "Installing Virtualbox-specific software..."
-       sudo adduser osint vboxsf
-       sudo rcvboxadd setup
-       sudo apt install -y virtualbox-guest-utils
-   ;;
-   2) echo "Installing UTM/QEMU-specific software..."
-       sudo apt install -y qemu-guest-agent
-       sudo systemctl enable qemu-guest-agent
-       sudo systemctl start qemu-guest-agent
-   ;;
-   3) echo "No virtualization-specific software will be installed."
-   ;;
-   *) echo "Invalid option. Try another one." && exit
-   ;;
-esac
-
 pythonInstall() {
     local name="$1"
 
@@ -60,10 +37,19 @@ pyGitInstall() {
 }
 
 # keyrings/repos
-wget -q -O /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
-echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
-wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add - 
-sudo add-apt-repository -y ppa:mozillateam/ppa
+wget -q -N -O /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
+if ! grep -q "brave-browser-apt-release" /etc/apt/sources.list /etc/apt/sources.list.d/*; then
+    echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
+fi
+
+if ! apt-key list | grep -q "Google Inc"; then
+    wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+fi
+
+if ! grep -q "mozillateam/ppa" /etc/apt/sources.list /etc/apt/sources.list.d/*; then
+    sudo add-apt-repository -y ppa:mozillateam/ppa
+fi
+
 echo '
 Package: *
 Pin: release o=LP-PPA-mozillateam
@@ -72,15 +58,39 @@ Pin-Priority: 1001
 echo 'Unattended-Upgrade::Allowed-Origins:: "LP-PPA-mozillateam:${distro_codename}";' | sudo tee /etc/apt/apt.conf.d/51unattended-upgrades-firefox > /dev/null
 
 sudo apt update
+
+# menu
+if ! [[ "$(dpkg -l qemu-guest-agent)" || "$(dpkg -l virtualbox-guest-utils)" ]]; then
+    echo "What Virtualization Software are you on?:"
+    echo "[1] Virtualbox"
+    echo "[2] UTM/QEMU"
+    echo "[3] None/Other"
+    read -rp "Choose an option: " option
+
+    # Check if qemu-guest-agent is installed
+    case $option in
+        1) echo "Installing Virtualbox-specific software..."
+            sudo adduser osint vboxsf
+            sudo rcvboxadd setup
+            sudo apt install -y virtualbox-guest-utils
+            ;;
+        2) echo "Installing UTM/QEMU-specific software..."
+            sudo apt install -y qemu-guest-agent
+            sudo systemctl enable qemu-guest-agent
+            sudo systemctl start qemu-guest-agent
+            ;;
+        3) echo "No virtualization-specific software will be installed."
+            ;;
+        *) echo "Invalid option. Try another one." && exit
+            ;;
+    esac
+
+    # purges
+    sudo apt purge -y apport apport-symptoms popularity-contest ubuntu-report whoopsie
+    sudo snap remove --purge firefox
+fi
+
 sudo apt install -y curl build-essential unrar brave-browser dkms gcc make perl libncurses5-dev gnupg2 tor python3-pip dh-python python3-all python3-stdeb python3-pyqt5 python3-gpg python3-requests python3-socks python3-packaging ffmpeg vlc libffi-dev jq ripgrep bleachbit kazam libcanberra-gtk-module httrack webhttrack subversion mat2 libimage-exiftool-perl mediainfo-gui default-jre git python3-venv
-
-# purges
-sudo apt purge -y apport apport-symptoms popularity-contest ubuntu-report whoopsie
-sudo snap remove --purge firefox
-
-sudo apt install -y qemu-guest-agent
-sudo systemctl enable qemu-guest-agent
-sudo systemctl start qemu-guest-agent
 
 sudo apt update --fix-missing
 sudo apt -y upgrade
@@ -106,7 +116,7 @@ sudo snap install amass
 # google earth
 cd ~/Desktop || exit
 wget http://dl.google.com/dl/earth/client/current/google-earth-stable_current_amd64.deb
-sudo rm google-earth-stable_current_amd64.deb
+rm google-earth-stable_current_amd64.deb
 sudo apt install -y ./google-earth-stable_current_amd64.deb
 
 # pip installs
@@ -123,9 +133,11 @@ pipx install ghunt
 
 # whisper
 sudo pip install -U openai-whisper
-mkdir -p ~/.cache/whisper
-cd ~/.cache/whisper || exit
-wget https://openaipublic.azureedge.net/main/whisper/models/9ecf779972d90ba49c06d968637d720dd632c55bbf19d441fb42bf17a411e794/small.pt
+if [ ! -d ~/.cache/whisper ]; then
+    mkdir -p ~/.cache/whisper
+    cd ~/.cache/whisper || exit
+    wget https://openaipublic.azureedge.net/main/whisper/models/9ecf779972d90ba49c06d968637d720dd632c55bbf19d441fb42bf17a411e794/small.pt
+fi
 
 # links
 ln -sf "$SOURCE"/vm-files/scripts ~/Documents/scripts
@@ -169,6 +181,7 @@ pyGitInstall "https://github.com/GuidoBartoli/sherloq.git" "gui/requirements.txt
 pyGitInstall "https://github.com/lanmaster53/recon-ng.git" "REQUIREMENTS"
 
 #snoop
+rm -rf ~/Downloads/Programs/snoop
 mkdir -p ~/Downloads/Programs/snoop
 cd ~/Downloads/Programs/snoop || exit
 wget https://github.com/snooppr/snoop/releases/latest/download/Snoop.for.GNU_Linux.rar
@@ -178,20 +191,28 @@ rm Snoop.for.GNU_Linux.rar
 ln -sf ~/Downloads/Programs/snoop/snoop_cli /usr/local/bin/snoop
 
 #h8mail
-pythonInstall "h8mail"
-cd ~/Downloads || exit
-h8mail -g
-sed -i 's/\;leak\-lookup\_pub/leak\-lookup\_pub/g' h8mail_config.ini
+if [ -d ~/Downloads/Programs/h8mail ]; then
+    pythonInstall "h8mail"
+else
+    pythonInstall "h8mail"
+    cd ~/Downloads || exit
+    h8mail -g
+    sed -i 's/\;leak\-lookup\_pub/leak\-lookup\_pub/g' h8mail_config.ini
+fi
 
 #archivebox
-pythonInstall "archivebox"
-mkdir -p ~/Documents/archivebox
-cd ~/Documents/archivebox || exit
-archivebox init
+if [ -d ~/Downloads/Programs/archivebox ]; then
+    pythonInstall "archivebox"
+else
+    pythonInstall "archivebox"
+    mkdir -p ~/Documents/archivebox
+    cd ~/Documents/archivebox || exit
+    archivebox init
+fi
 
 # ripme.jar
 cd ~/Downloads || exit
-wget https://github.com/ripmeapp/ripme/releases/latest/download/ripme.jar
+wget -N https://github.com/ripmeapp/ripme/releases/latest/download/ripme.jar
 chmod +x ripme.jar
 
 # eyewitness
