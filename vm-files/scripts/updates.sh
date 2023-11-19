@@ -37,7 +37,7 @@ pyGitInstall() {
 }
 
 # keyrings/repos
-wget -q -N -O /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
+sudo wget -q -N -O /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
 if ! grep -q "brave-browser-apt-release" /etc/apt/sources.list /etc/apt/sources.list.d/*; then
     echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
 fi
