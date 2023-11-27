@@ -49,6 +49,9 @@ pyGitInstall() {
 
 cd
 
+# disable ubuntu pro bs
+mv /etc/apt/apt.conf.d/20apt-esm-hook.conf /etc/apt/apt.conf.d/20apt-esm-hook.conf.bak
+
 # keyrings/repos
 sudo wget -q -N -O /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
 if ! grep -q "brave-browser-apt-release" /etc/apt/sources.list /etc/apt/sources.list.d/*; then
@@ -166,9 +169,9 @@ for i in "$SOURCE"/vm-files/shortcuts/*; do
 done
 
 pythonInstall "streamlink"
-pythonInstall "instalooter"
+#pythonInstall "instalooter"
 pythonInstall "instaloader"
-pythonInstall "toutatis"
+#pythonInstall "toutatis"
 pythonInstall "gallery-dl"
 pythonInstall "social-analyzer"
 pythonInstall "holehe"
